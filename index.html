@@ -1,0 +1,485 @@
+<title>张铧云大小姐的每日todo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+KuaiLe&display=swap">
+<style>
+/* Layout: one narrow pastel column, a sticky tab pill, big day card with three time-of-day cards below. */
+:root{
+  --bg:#FFF9FC;
+  --bg-dot:#FFE9F2;
+  --card:#FFFFFF;
+  --card-edge:#FFE0EC;
+  --ink:#6A4455;
+  --muted:#A8869A;
+  --pink:#FFB3CF;
+  --pink-deep:#E0649A;
+  --pink-soft:#FFF0F6;
+  --petal:#FFEDE8;
+  --butter:#FFF6D6;
+  --on-deep:#FFFFFF;
+  --shadow:0 8px 22px rgba(240,120,170,.12);
+  --font-display:"ZCOOL KuaiLe","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --font-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  background-color:var(--bg);
+  background-image:radial-gradient(var(--bg-dot) 1.6px,transparent 1.7px);
+  background-size:22px 22px;
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15px;line-height:1.6;
+  padding-inline:16px;padding-block:18px 48px;
+}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+svg.ic{width:1em;height:1em;fill:currentColor;flex:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--pink-deep);outline-offset:2px;border-radius:10px}
+
+/* hero */
+.hero{position:relative;text-align:center;padding:10px 8px 2px}
+.hero h1{font-family:var(--font-display);font-weight:400;font-size:34px;line-height:1.2;margin:0;color:var(--pink-deep);text-wrap:balance;letter-spacing:.04em}
+.hero p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.hero .sp{position:absolute;color:var(--pink);opacity:.9}
+.hero .sp.a{left:8%;top:10px;font-size:22px;animation:float 4s ease-in-out infinite}
+.hero .sp.b{right:10%;top:2px;font-size:16px;color:var(--petal);animation:float 5s ease-in-out infinite .6s}
+.hero .sp.c{right:4%;top:46px;font-size:20px;animation:float 4.5s ease-in-out infinite 1.2s}
+@keyframes float{50%{transform:translateY(-6px) rotate(8deg)}}
+
+.chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.chip{border-radius:20px;padding:10px 8px;text-align:center;border:2px solid var(--card-edge);background:var(--card);box-shadow:var(--shadow)}
+.chip:nth-child(1){background:var(--pink-soft)}
+.chip:nth-child(2){background:var(--petal)}
+.chip:nth-child(3){background:var(--butter)}
+.chip b{display:block;font-family:var(--font-display);font-weight:400;font-size:28px;line-height:1.1;color:var(--pink-deep)}
+.chip span{font-size:12px;color:var(--muted)}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;padding:6px;border-radius:999px;background:var(--card);border:2px solid var(--card-edge);box-shadow:var(--shadow)}
+.tabs button{flex:1;border:0;background:transparent;border-radius:999px;padding:8px 6px;font-weight:700;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--pink-deep);color:var(--on-deep)}
+
+/* day card */
+.daycard{border-radius:28px;background:var(--card);border:2px solid var(--card-edge);box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:14px}
+.daytop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.nav{width:40px;height:40px;border-radius:50%;border:2px solid var(--card-edge);background:var(--pink-soft);display:grid;place-items:center;font-size:18px;color:var(--pink-deep)}
+.nav[disabled]{opacity:.35;cursor:default}
+.dateblock{flex:1;min-width:150px;text-align:center}
+.dateblock .big{font-family:var(--font-display);font-size:40px;line-height:1.1;color:var(--pink-deep)}
+.dateblock .wd{display:inline-block;margin-left:6px;font-size:15px;font-weight:700;background:var(--pink-soft);color:var(--pink-deep);border-radius:999px;padding:1px 10px;vertical-align:middle}
+.phase{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:4px;margin-top:4px;background:var(--butter);border-radius:999px;padding:2px 12px;font-weight:700;font-size:13px}
+.badge .ic{color:var(--pink-deep)}
+.today-btn{border:2px solid var(--pink-deep);background:transparent;color:var(--pink-deep);border-radius:999px;padding:3px 12px;font-weight:700;font-size:13px}
+.notice{background:var(--petal);border-radius:16px;padding:8px 12px;font-size:13px}
+.prog{display:flex;flex-direction:column;gap:6px}
+.bar{height:14px;border-radius:999px;background:var(--pink-soft);overflow:hidden;border:2px solid var(--card-edge)}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pink),var(--pink-deep));transition:width .35s ease}
+.progtxt{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.progtxt b{color:var(--pink-deep)}
+.party .progtxt b{animation:pop .6s ease}
+@keyframes pop{40%{transform:scale(1.25)}}
+
+.slot{border-radius:22px;border:2px dashed var(--card-edge);padding:12px;background:var(--bg)}
+.slot.s1{background:var(--pink-soft)}
+.slot.s2{background:var(--petal)}
+.slot h3{margin:0 0 6px;display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:400;font-size:20px;color:var(--pink-deep)}
+.slot h3 small{font-family:var(--font-body);font-size:12px;color:var(--muted)}
+.slot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.task,.event,.note{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start;padding:8px 10px;border-radius:16px;background:var(--card);border:2px solid var(--card-edge)}
+.task .txt,.event .txt,.note .txt{min-width:0;overflow-wrap:anywhere}
+.check{width:30px;height:30px;border:0;background:transparent;padding:0;display:grid;place-items:center;color:var(--pink);font-size:28px}
+.check .ic{transition:transform .2s ease}
+.check[aria-pressed="true"]{color:var(--pink-deep)}
+.check[aria-pressed="true"] .ic{animation:pop .4s ease}
+.check .off{display:block}.check .on{display:none}
+.check[aria-pressed="true"] .off{display:none}.check[aria-pressed="true"] .on{display:block}
+.task.done .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--pink)}
+.time{display:inline-block;margin-right:6px;font-size:12px;font-weight:700;background:var(--butter);border-radius:999px;padding:0 8px;line-height:1.7;font-variant-numeric:tabular-nums}
+.txt small{color:var(--muted);font-size:12.5px}
+.event{background:transparent;border-style:dashed;color:var(--muted)}
+.event .mark{display:grid;place-items:center;width:30px;height:24px;color:var(--pink-deep);font-size:20px}
+.note{background:transparent;border:0;padding-block:2px;color:var(--muted);font-size:13px}
+.note .mark{display:grid;place-items:center;width:30px;color:var(--pink);font-size:14px}
+.empty{color:var(--muted);font-size:13px;padding:4px 2px}
+
+/* calendar */
+.panel{display:flex;flex-direction:column;gap:16px}
+.card{border-radius:26px;background:var(--card);border:2px solid var(--card-edge);box-shadow:var(--shadow);padding:16px}
+.card h2{margin:0 0 8px;font-family:var(--font-display);font-weight:400;font-size:22px;color:var(--pink-deep)}
+.card h3{margin:12px 0 4px;font-size:15px}
+.card p{margin:4px 0}
+.card ul{margin:4px 0;padding-left:20px}
+.month{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.month .h{text-align:center;font-size:12px;font-weight:700;color:var(--muted)}
+.cell{position:relative;aspect-ratio:1/1.05;border-radius:14px;border:2px solid transparent;background:transparent;padding:3px 2px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;font-size:13px;font-variant-numeric:tabular-nums}
+.cell.on{background:var(--pink-soft);border-color:var(--card-edge);cursor:pointer;font-weight:700}
+.cell.off{color:var(--muted);opacity:.45}
+.cell.p4{background:var(--petal);opacity:.7}
+.cell.sel{border-color:var(--pink-deep)}
+.cell.today{box-shadow:0 0 0 3px var(--butter)}
+.cell .m{width:78%;height:5px;border-radius:99px;background:var(--card);overflow:hidden}
+.cell .m i{display:block;height:100%;background:var(--pink-deep)}
+.cell .sp{position:absolute;top:1px;right:2px;font-size:11px;color:var(--pink-deep)}
+.cell .full{font-size:10px;color:var(--pink-deep);line-height:1}
+.legend{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.tablewrap{overflow-x:auto;border-radius:16px;border:2px solid var(--card-edge)}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:5px 8px;text-align:center;border-bottom:1px solid var(--card-edge)}
+th{background:var(--pink-soft);color:var(--pink-deep);position:sticky;top:0}
+tr.hit td{background:var(--butter);font-weight:700}
+.duenow{background:var(--butter);border-radius:16px;padding:8px 12px;font-size:13px;margin:6px 0 10px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:420px){.hero h1{font-size:28px}.dateblock .big{font-size:34px}.chip b{font-size:24px}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.2 2.8 4.5 6.4 4.5c2.2 0 3.6 1.2 5.6 3.4 2-2.2 3.4-3.4 5.6-3.4 3.6 0 5.5 3.7 4 7.3C19.5 16.4 12 21 12 21z"/></symbol>
+  <symbol id="i-heart-o" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.2 2.8 4.5 6.4 4.5c2.2 0 3.6 1.2 5.6 3.4 2-2.2 3.4-3.4 5.6-3.4 3.6 0 5.5 3.7 4 7.3C19.5 16.4 12 21 12 21zm0-2.6c2.4-1.6 5.8-4.4 7.2-7.3.9-2.1-.1-4.6-2.4-4.6-1.5 0-2.6.9-4.8 3.4-2.2-2.5-3.3-3.4-4.8-3.4-2.3 0-3.3 2.5-2.4 4.6 1.4 2.9 4.8 5.7 7.2 7.3z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 19a4.5 4.5 0 1 1 .9-8.9A6 6 0 0 1 19.3 12 3.5 3.5 0 0 1 18.5 19z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z"/></symbol>
+  <symbol id="i-bow" viewBox="0 0 24 24"><path d="M12 12 3 6.5v11zM12 12l9-5.5v11z"/><circle cx="12" cy="12" r="2.6"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2c.6 4.6 2.4 8.4 10 10-7.6 1.6-9.4 5.4-10 10-.6-4.6-2.4-8.4-10-10 7.6-1.6 9.4-5.4 10-10z"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="hero">
+    <svg class="ic sp a"><use href="#i-heart"/></svg>
+    <svg class="ic sp b"><use href="#i-spark"/></svg>
+    <svg class="ic sp c"><use href="#i-star"/></svg>
+    <h1>张铧云大小姐的每日todo</h1>
+    <p>10.13 到 12.12，每天做一点点，六级和期中期末都会好好的</p>
+  </header>
+  <section class="chips" id="chips" aria-label="倒计时"></section>
+  <nav class="tabs" role="tablist" aria-label="页面">
+    <button role="tab" id="t-day" aria-selected="true" aria-controls="p-day">今天</button>
+    <button role="tab" id="t-cal" aria-selected="false" aria-controls="p-cal">日历</button>
+    <button role="tab" id="t-tips" aria-selected="false" aria-controls="p-tips">小抄</button>
+  </nav>
+  <main>
+    <section class="panel" id="p-day" role="tabpanel" aria-labelledby="t-day"></section>
+    <section class="panel" id="p-cal" role="tabpanel" aria-labelledby="t-cal" hidden></section>
+    <section class="panel" id="p-tips" role="tabpanel" aria-labelledby="t-tips" hidden></section>
+  </main>
+</div>
+
+<script>
+(function(){
+"use strict";
+var Y=2026;
+var WD=["日","一","二","三","四","五","六"];
+
+/* ---------- plan data (same as the planning doc) ---------- */
+var AIS="14:00–16:30 会计信息系统课";
+var COST="14:00–16:30 成本课；18:30–19:30 网课";
+var ECON="14:00–16:30 计量课；17:30–18:30 网课";
+var TUT="家教 9:30–11:00（含路程约 8:45–11:45）";
+var REST="休息，不安排学习";
+var CL="上课（到 17:30，含 14:00–15:30 政府会计）";
+var RD="（限时40′+批改+标生词，约90′）";
+var BK="复听旧篇20′（L1→L2…循环，挑难句跟读）";
+var WX="（限时30′+对照改写30′）";
+var FR="周复盘40′（打勾、挪项、更新顽固词表）";
+var MN="复盘+长难句拆10句+整理生词表 30′；写译积累20′";
+var FM="（10:00 起按真实时间：写作→听力→阅读→翻译）";
+var NP="确认下周计划10′";
+var L35="（连做35′+订正40′）";
+var ADD="写作加练60′"+WX;
+var ADDBOTH="14:30–16:30 写作加练、翻译加练各一篇（各限时30′+对照改写30′）；其余休息";
+var FLEX="14:00–15:00 翻译加练"+WX+"；15:00–16:30 弹性补缺块（补没做完的项或六级薄弱项）";
+
+var D=[
+["10-13","10:00–12:15 计量 Part1 知识梳理（画一页框架：定义/假设/公式/结论）；12:15–13:00 政府会计周复习","14:00–16:30 计量课（新内容）；17:30–18:30 网课","19:30–21:00 精听 L1；单词15′（R0①）；21:20–21:50 整理计量课笔记"],
+["10-14","10:00–11:30 计量 Part1 做题；11:45–13:00 Part1 证明整理+默写第1遍","14:00–17:00 上课","19:30–21:00 精听 L2；单词15′（顽固词表）；写译积累10′；家教讲义30′；计量补做30′"],
+["10-15","10:00–11:45 计量 Part2 梳理；12:00–13:00 Part2 做题",COST,"19:45–21:15 精听 L3；单词15′（R0②）；写译积累10′；计量补做30′"],
+["10-16","10:00–11:30 计量 Part2 证明整理+默写①；11:40–12:20 Part1 证明默写②；12:20–13:00 成本周复习",AIS,"19:30–21:00 精听 L4；单词15′（顽固词表）；写译积累10′；家教讲义30′；计量补做30′"],
+["10-17",TUT,"14:00–14:40 会计信息系统周复习；15:00–16:30 阅读 R1（限时40′+精批+标生词）；单词：顽固词表",REST],
+["10-18","10:00–13:00 计量 Part3 梳理+做题","14:30–16:00 阅读 R2（限时40′+精批+标生词）","19:30–21:00 精听 L5；单词15′（R1①）；21:20–22:10 翻译 T1（第一次：不计时先写完30′+对照参考译文20′）"],
+["10-19","10:00–11:30 计量 Part3 证明整理+默写①；11:45–13:00 Part1/2 证明默写③","14:00–19:30 上课（14:00–15:30 政府会计）","20:00–21:30 精听 L6；单词15′（R0③、R2①）；家教讲义30′；计量补做30′"],
+["10-20","10:00–12:15 计量 Part4 梳理；12:15–13:00 政府会计周复习","14:00–16:30 计量课（Part5 新内容）；17:30–18:30 网课","19:30–21:00 精听 L7；单词15′（R1②）；21:20–21:50 整理 Part5 课堂笔记"],
+["10-21","10:00–11:30 计量 Part4 做题；11:45–13:00 Part4 证明整理+默写①","14:00–17:00 上课","19:30–21:00 精听 L8；单词15′（R2②）；家教讲义30′；计量补做30′"],
+["10-22","10:00–11:45 计量 Part5 梳理；12:00–13:00 Part5 做题",COST,"19:45–21:15 精听 L9；单词15′（顽固词表）；写译积累10′；计量补做30′"],
+["10-23","10:00–11:10 计量 Part5 证明整理+默写①；11:15–12:00 Part3/4 证明默写②；12:15–13:00 成本周复习",AIS,"19:30–21:00 精听 L10；单词15′（顽固词表）；家教讲义30′；计量补做30′"],
+["10-24",TUT,"14:00–14:40 会计信息系统周复习；15:00–17:30 计量：全部证明（P1–P5）默写第1轮+订正；单词：R1③",REST],
+["10-25","10:00–12:00 计量自测卷（按期中题型限时）；12:00–13:00 订正+错题归因","14:30–16:30 计量：证明默写第2轮（只写第1轮错的）+ 公式/易错点速记单","19:30–21:00 精听 L11；单词15′（R2③）；写作 W1（第一次：不计时，先写完整篇 30′）"],
+["10-26","10:00–13:00 计量：证明默写第3轮 + 过一遍自测卷错题","14:00–19:30 上课","不精听。20:00–20:40 看一遍证明清单+公式单；单词15′（R0④）；22:30 前睡"],
+["10-27","10:00–12:00 最后浏览证明清单+公式单（不做新题）","计量期中考试（按考试通知时间，通常是课表上的 14:00–16:30）；17:30–18:30 网课","考完放松；21:00–22:00 精听 L12（听不动就跳过，后面顺延）；单词15′（顽固词表）"],
+["10-28","阅读 R3"+RD+"；计量：期中卷订正+错题归因 75′（顺便预习期中后新章节）","14:00–17:00 上课","精听 L13；单词15′（顽固词表）；家教讲义30′"],
+["10-29","写作 W1（真题第1套作文：限时30′+改写45′）；翻译 T1（真题第1套翻译：30′+对照45′）",COST,"精听 L14；单词15′（R3①）"],
+["10-30","阅读 R4"+RD+"；成本周复习 60–75′",AIS,"精听 L15；单词15′（顽固词表）；家教讲义30′"],
+["10-31",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W2（真题第2套作文：30′+改写）；单词：R1④、R3②、R4①",REST],
+["11-01","阅读 R5"+RD+"；"+FR,ADDBOTH,"精听 L16；单词15′（R2④）；"+NP],
+["11-02","阅读 R6"+RD+"；"+MN,"14:00–19:30 上课（含 14:00–15:30 政府会计，这是最后一个周一晚课）","精听 L17；单词15′（R4②、R5①）；家教讲义30′"],
+["11-03","翻译 T2（真题第2套翻译：限时30′+对照改写45′）；政府会计周复习 60′",ECON,"精听 L18；单词15′（R6①）；整理计量课笔记20′"],
+["11-04","阅读 R7"+RD+"；计量周复习 75′（新课+习题，旧证明循环默写 P2）","14:00–17:00 上课","精听 L19；单词15′（R3③、R5②）；家教讲义30′"],
+["11-05","写作 W3（真题第3套作文：限时30′+改写45′）；翻译 T3（真题第3套翻译：30′+对照45′）",COST,"精听 L20；单词15′（R6②、R7①）"],
+["11-06","阅读 R8"+RD+"；成本周复习 60–75′",AIS,"精听 L21；单词15′（R4③）；家教讲义30′"],
+["11-07",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W4（真题第4套作文：30′+改写）；单词：R7②、R8①",REST],
+["11-08","阅读 R9"+RD+"；"+FR,ADDBOTH,"精听 L22（精听收官）；单词15′（R5③）；"+NP],
+["11-09","阅读 R10"+RD+"；"+MN,CL,BK+"；单词15′（R6③、R8②、R9①）；家教讲义30′；"+ADD],
+["11-10","翻译 T4（真题第4套翻译：限时30′+对照改写45′）；政府会计周复习 60′",ECON,"整套听力 #1"+L35+"；单词15′（R10①）；整理计量课笔记20′"],
+["11-11","阅读 R11"+RD+"；计量周复习 75′（新课+习题，旧证明循环默写 P3）","14:00–17:00 上课（最后一次）",BK+"；单词15′（R3④、R7③、R9②）；家教讲义30′"],
+["11-12","写作 W5（真题第5套作文：限时30′+改写45′）；翻译 T5（真题第5套翻译：30′+对照45′）",COST,"整套听力 #2"+L35+"；单词15′（R10②、R11①）"],
+["11-13","阅读 M1"+RD+"；成本周复习 60–75′",AIS,BK+"；单词15′（R4④、R8③）；家教讲义30′"],
+["11-14",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W6（真题第6套作文：30′+改写）；单词：R11②、M1①",REST],
+["11-15","全套模拟 F1"+FM+"；"+FR,"休息",BK+"；单词15′（R5④、R9③）；"+NP],
+["11-16","阅读 M2"+RD+"；"+MN,CL,BK+"；单词15′（R6④、R10③、M1②、F1①）；家教讲义30′；"+ADD],
+["11-17","翻译 T6（真题第6套翻译：限时30′+对照改写45′）；政府会计周复习 60′",ECON,"整套听力 #3"+L35+"；单词15′（M2①）；整理计量课笔记20′"],
+["11-18","阅读 M3"+RD+"；计量周复习 75′（新课+习题，旧证明循环默写 P4）",FLEX,BK+"；单词15′（R7④、R11③、F1②）；家教讲义30′"],
+["11-19","写作 W7（真题第7套作文：限时30′+改写45′）；翻译 T7（真题第7套翻译：30′+对照45′）",COST,"整套听力 #4"+L35+"；单词15′（M2②、M3①）"],
+["11-20","阅读 M4"+RD+"；成本周复习 60–75′",AIS,BK+"；单词15′（R8④、M1③）；家教讲义30′"],
+["11-21",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W8（真题第8套作文：30′+改写）；单词：M3②、M4①",REST],
+["11-22","全套模拟 F2"+FM+"；"+FR,"休息",BK+"；单词15′（R9④、F1③）；"+NP],
+["11-23","阅读 M5"+RD+"；"+MN,CL,BK+"；单词15′（R10④、M2③、M4②、F2①）；家教讲义30′；"+ADD],
+["11-24","翻译 T8（真题第8套翻译：限时30′+对照改写45′）；政府会计周复习 60′",ECON,"整套听力 #5"+L35+"；单词15′（M5①）；整理计量课笔记20′"],
+["11-25","阅读 M6"+RD+"；计量周复习 75′（新课+习题，旧证明循环默写 P5）",FLEX,BK+"；单词15′（R11④、M3③、F2②）；家教讲义30′"],
+["11-26","写作 W9（真题第9套作文：限时30′+改写45′）；翻译 T9（真题第9套翻译：30′+对照45′）",COST,"整套听力 #6"+L35+"；单词15′（M5②、M6①）"],
+["11-27","阅读 M7"+RD+"；成本周复习 60–75′",AIS,BK+"；单词15′（M1④、M4③）；家教讲义30′"],
+["11-28",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W10（真题第10套作文：30′+改写）；单词：M6②、M7①",REST],
+["11-29","全套模拟 F3"+FM+"；"+FR,"休息",BK+"；单词15′（F1④、F2③）；"+NP],
+["11-30","阅读 M8"+RD+"；"+MN,CL,BK+"；单词15′（M2④、M5③、M7②、F3①）；家教讲义30′；"+ADD],
+["12-01","翻译 T10（限时30′+对照改写45′）；政府会计周复习 30′",ECON,"整套听力 #7；单词15′（M8①）；整理计量课笔记20′"],
+["12-02","阅读 M9（限时40′+精批，约90′）；计量周复习 30′","14:00–16:30 弹性补缺块：写作模板、翻译词块过一遍","复听旧篇20′；单词15′（M3④、M6③、F3②）；家教讲义30′"],
+["12-03","写作 W11（限时30′+改写）；翻译 T11（30′+对照）",COST,"整套听力 #8；单词15′（M8②、M9①）"],
+["12-04","阅读 M10（限时40′+精批，约90′）；成本周复习 30′",AIS,"复听旧篇20′；单词15′（M4④、M7③）；家教讲义30′"],
+["12-05",TUT,"14:00–14:30 会计信息系统周复习；15:15–16:15 写作 W12（限时30′+改写）；单词：M9②、M10①",REST],
+["12-06","上午放松：过一遍错题本和顽固词表 60′，不做新题","按真实考试时段（预计 15:00 起，以准考证为准）：全套模拟 F4，写作→听力→阅读→翻译，严格计时","19:30–20:45 复盘 F4（最重要：分项记分，只找“能改的失分点”）；单词15′（F2④、F3③）；把暴露的问题写成 3 条“考场提醒”贴在桌前；早睡"],
+["12-07","按 F4 结果补最弱一项（听力/阅读/写作/翻译只选一个）90′；顽固词表过一遍",CL,"不做新套题。复听旧篇20′；单词15′（F4①、M5④、M8③、M10②）；写作模板+翻译常用词块过一遍 30′"],
+["12-08","写作 W13+翻译 T12（各限时30′，当作考前最后一次手感练习）；政府会计周复习 30′",ECON,"整套听力 #9（最后一套）；单词15′（顽固词表）"],
+["12-09","阅读 1 套（只做仔细阅读+长篇匹配，限时25′）；计量周复习 30′","14:00–16:30 休息/散步","错题本+顽固词表过一遍 40′；单词15′（F4②、M6④、M9③）；早睡"],
+["12-10","只翻：作文模板、翻译词块、错题本、顽固词表（共约60′）；不做新题",COST,"轻松过一遍听力易错点 15′；整理准考证、身份证、笔、耳机（以考试通知为准）；22:30 前睡"],
+["12-11","放松为主：只看一页“考场提醒”和作文开头结尾句型 30′；顽固词表 15′",AIS,"早吃早睡，22:30 前睡；不再看新材料"],
+["12-12","六级考试日：上午家教 9:30–11:00（如不调课）；回家吃饭午休，翻一页“考场提醒”20′","按准考证时间提前 1 小时到考场；考完彻底休息","休息；不安排学习"]
+];
+var BADGES={"10-27":["计量期中","star"],"12-12":["六级考试","crown"],"11-15":["全套模拟 F1","spark"],"11-22":["全套模拟 F2","spark"],"11-29":["全套模拟 F3","spark"],"12-06":["全套模拟 F4","spark"]};
+var SETS=[["R0","10-12"],["R1","10-17"],["R2","10-18"],["R3","10-28"],["R4","10-30"],["R5","11-01"],["R6","11-02"],["R7","11-04"],["R8","11-06"],["R9","11-08"],["R10","11-09"],["R11","11-11"],["M1","11-13"],["F1","11-15"],["M2","11-16"],["M3","11-18"],["M4","11-20"],["F2","11-22"],["M5","11-23"],["M6","11-25"],["M7","11-27"],["F3","11-29"],["M8","11-30"],["M9","12-02"],["M10","12-04"],["F4","12-06"]];
+var ROUND=["①","②","③","④"], GAPS=[1,3,7,14];
+
+/* ---------- helpers ---------- */
+function pad(n){return (n<10?"0":"")+n}
+function mk(md){var p=md.split("-");return new Date(Y,+p[0]-1,+p[1])}
+function toMd(d){return pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function fmt(md){var p=md.split("-");return (+p[0])+"."+(+p[1])}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function ic(id){return '<svg class="ic" aria-hidden="true"><use href="#i-'+id+'"/></svg>'}
+function byId(i){return document.getElementById(i)}
+var FIRST=D[0][0], LAST=D[D.length-1][0];
+var now=new Date();
+var todayMd = now.getFullYear()===Y ? toMd(now) : (now.getFullYear()<Y ? "00-00" : "99-99");
+var startToday=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+function daysTo(dt){return Math.round((dt-startToday)/864e5)}
+var sel = todayMd<FIRST ? FIRST : (todayMd>LAST ? LAST : todayMd);
+var todayInRange = todayMd>=FIRST && todayMd<=LAST;
+var INDEX={}; D.forEach(function(r,i){INDEX[r[0]]=i});
+
+var EV=/^(\d{1,2}:\d{2}[–-]\d{1,2}:\d{2}\s*)?(计量课|成本课|会计信息系统课|上课|网课|休息|家教\s*\d|计量期中考试|六级考试日|按准考证)/;
+var NOTE=/^(其余休息|不安排学习|不精听|不做新套题|不再看|考完放松|早吃早睡|早睡|\d{1,2}:\d{2}\s*前睡)/;
+function kind(t){ if(NOTE.test(t)) return "note"; if(EV.test(t)) return "event"; return "task"; }
+function parse(cell){
+  return cell.split(/[；。]/).map(function(s){return s.trim()}).filter(Boolean).map(function(t){return {t:t,k:kind(t)}});
+}
+function decorate(t){
+  var m=t.match(/^(\d{1,2}:\d{2}[–-]\d{1,2}:\d{2})\s*(.*)$/), time="", rest=t;
+  if(m){time='<span class="time">'+esc(m[1])+'</span>'; rest=m[2];}
+  rest=esc(rest).replace(/（([^）]*)）/g,'<small>（$1）</small>');
+  return time+rest;
+}
+function slots(md){var r=D[INDEX[md]];return [r[1],r[2],r[3]].map(parse)}
+function counts(md){
+  var s=slots(md), tot=0, done=0;
+  s.forEach(function(list,si){list.forEach(function(it,i){if(it.k==="task"){tot++; if(ticks[md+":"+si+":"+i]) done++;}})});
+  return {tot:tot,done:done};
+}
+
+/* ---------- saved ticks: db when available, browser storage as a fallback ---------- */
+var LS="pink-planner-ticks-v1";
+var ticks={};
+try{ticks=JSON.parse(localStorage.getItem(LS)||"{}")||{}}catch(e){ticks={}}
+var dbDoc=null, saveTimer=null, saving=false, dirty=false;
+function saveLocal(){try{localStorage.setItem(LS,JSON.stringify(ticks))}catch(e){}}
+function flush(){
+  if(!dbDoc||saving||!dirty) return;
+  saving=true; dirty=false;
+  dbDoc.set({done:ticks,updated:Date.now()}).catch(function(){}).then(function(){saving=false; if(dirty) flush();});
+}
+function persist(){
+  saveLocal();
+  if(!dbDoc) return;
+  dirty=true; clearTimeout(saveTimer); saveTimer=setTimeout(flush,600);
+}
+function initDb(){
+  if(!(window.claude&&window.claude.use)) return;
+  Promise.all([window.claude.use("db"),window.claude.use("user")]).then(function(r){
+    var db=r[0], user=r[1];
+    if(!db||!user) return null;
+    return user.id().then(function(id){
+      if(!id) return null;
+      dbDoc=db.doc("data/users/"+id+"/ticks");
+      return dbDoc.get().then(function(snap){
+        if(snap.exists){
+          var rem=(snap.data()||{}).done;
+          if(rem&&typeof rem==="object"){ticks=Object.assign({},rem); saveLocal(); renderAll();}
+        }else if(Object.keys(ticks).length){ dirty=true; flush(); }
+      });
+    });
+  }).catch(function(){ dbDoc=null; });
+}
+
+/* ---------- views ---------- */
+function renderChips(){
+  var items=[["计量期中",daysTo(new Date(Y,9,27)),"10.27"],["六级考试",daysTo(new Date(Y,11,12)),"12.12"],["期末周开始",daysTo(new Date(Y+1,0,12)),"1.12"]];
+  byId("chips").innerHTML=items.map(function(x){
+    var n=x[1];
+    var big = n>0 ? n : (n===0 ? "今天" : "已过");
+    var lab = n>0 ? "天 · 距"+x[0]+"（"+x[2]+"）" : x[0]+"（"+x[2]+"）";
+    return '<div class="chip"><b>'+big+'</b><span>'+esc(lab)+'</span></div>';
+  }).join("");
+}
+function phaseOf(md){
+  if(md<="10-27") return "阶段一 · 计量期中冲刺";
+  if(md<="11-30") return "阶段二 · 六级主战场";
+  return "阶段三 · 六级冲刺";
+}
+var SLOT=[["sun","上午","主学习块"],["cloud","下午","课程与小任务"],["moon","晚上","听力和单词"]];
+function msg(c){
+  if(c.tot===0) return "今天没有要打勾的任务，好好休息或加油考试";
+  var p=c.done/c.tot;
+  if(p===0) return "先从最小的一件开始吧";
+  if(p<.5) return "已经出发啦，继续继续";
+  if(p<1) return "过半啦，快到终点了";
+  return "今天全部完成，抱抱你";
+}
+function renderDay(){
+  var md=sel, i=INDEX[md], r=D[i], d=mk(md), c=counts(md);
+  var b=BADGES[md];
+  var notice="";
+  if(todayMd<FIRST){var n=daysTo(mk(FIRST)); notice='<div class="notice">计划从 10.13 开始，还有 '+n+' 天。先看看第一天要做什么吧。</div>';}
+  else if(todayMd>LAST){notice='<div class="notice">六级已经结束啦。期末复习的安排在“小抄”里，期末周的具体日程等考试时间出来再排。</div>';}
+  var html='<div class="daycard'+(c.tot>0&&c.done===c.tot?" party":"")+'">';
+  html+='<div class="daytop">'+
+    '<button class="nav" id="prev" aria-label="前一天"'+(i===0?" disabled":"")+'>‹</button>'+
+    '<div class="dateblock"><div><span class="big">'+esc(fmt(md))+'</span><span class="wd">周'+WD[d.getDay()]+'</span></div>'+
+    '<div class="phase">'+esc(phaseOf(md))+'</div>'+
+    (b?'<div class="badge">'+ic(b[1])+esc(b[0])+'</div>':"")+'</div>'+
+    '<button class="nav" id="next" aria-label="后一天"'+(i===D.length-1?" disabled":"")+'>›</button></div>';
+  if(todayInRange && md!==todayMd) html+='<div style="text-align:center"><button class="today-btn" id="gotoday">回到今天</button></div>';
+  html+=notice;
+  html+='<div class="prog"><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+c.tot+'" aria-valuenow="'+c.done+'"><i style="width:'+(c.tot?Math.round(c.done/c.tot*100):0)+'%"></i></div>'+
+    '<div class="progtxt"><span>'+esc(msg(c))+'</span><span><b>'+c.done+'</b> / '+c.tot+' 完成</span></div></div>';
+  slots(md).forEach(function(list,si){
+    html+='<div class="slot s'+si+'"><h3>'+ic(SLOT[si][0])+SLOT[si][1]+' <small>'+SLOT[si][2]+'</small></h3><ul>';
+    if(!list.length) html+='<li class="empty">这一段没有安排</li>';
+    list.forEach(function(it,ix){
+      var key=md+":"+si+":"+ix;
+      if(it.k==="task"){
+        var on=!!ticks[key];
+        html+='<li class="task'+(on?" done":"")+'"><button class="check" data-key="'+key+'" aria-pressed="'+on+'" aria-label="完成：'+esc(it.t)+'"><svg class="ic off" aria-hidden="true"><use href="#i-heart-o"/></svg><svg class="ic on" aria-hidden="true"><use href="#i-heart"/></svg></button><span class="txt">'+decorate(it.t)+'</span></li>';
+      }else if(it.k==="event"){
+        html+='<li class="event"><span class="mark">'+ic("bow")+'</span><span class="txt">'+decorate(it.t)+'</span></li>';
+      }else{
+        html+='<li class="note"><span class="mark">'+ic("heart")+'</span><span class="txt">'+decorate(it.t)+'</span></li>';
+      }
+    });
+    html+='</ul></div>';
+  });
+  html+='</div>';
+  byId("p-day").innerHTML=html;
+}
+function monthHtml(m,title){
+  var first=new Date(Y,m-1,1), days=new Date(Y,m,0).getDate(), lead=(first.getDay()+6)%7;
+  var h='<div class="card"><h2>'+title+'</h2><div class="month">';
+  ["一","二","三","四","五","六","日"].forEach(function(w){h+='<div class="h">'+w+'</div>'});
+  for(var k=0;k<lead;k++) h+='<div></div>';
+  for(var d=1;d<=days;d++){
+    var md=pad(m)+"-"+pad(d), inr=(md in INDEX);
+    var cls="cell "+(inr?"on":(md>LAST&&m===12?"p4":"off"));
+    if(md===sel&&inr) cls+=" sel"; if(md===todayMd) cls+=" today";
+    var inner='<span>'+d+'</span>';
+    if(inr){
+      var c=counts(md), pc=c.tot?Math.round(c.done/c.tot*100):0;
+      inner+= (c.tot&&c.done===c.tot) ? '<span class="full">'+ic("heart")+'</span>' : '<span class="m"><i style="width:'+pc+'%"></i></span>';
+      if(BADGES[md]) inner+='<span class="sp">'+ic(BADGES[md][1])+'</span>';
+      h+='<button class="'+cls+'" data-day="'+md+'" aria-label="'+fmt(md)+'">'+inner+'</button>';
+    }else h+='<div class="'+cls+'">'+inner+'</div>';
+  }
+  return h+'</div></div>';
+}
+function renderCal(){
+  byId("p-cal").innerHTML=monthHtml(10,"10 月")+monthHtml(11,"11 月")+monthHtml(12,"12 月")+
+    '<div class="legend"><span>粉色小条 = 当天完成进度</span><span>实心爱心 = 全部完成</span><span>黄色圈 = 今天</span><span>淡紫 = 期末复习阶段</span></div>';
+}
+function dueList(md){
+  var out=[];
+  SETS.forEach(function(s){GAPS.forEach(function(g,k){var d=mk(s[1]); d.setDate(d.getDate()+g); if(toMd(d)===md && d.getFullYear()===Y) out.push(s[0]+ROUND[k]);});});
+  return out;
+}
+function renderTips(){
+  var due=dueList(sel);
+  var rows=SETS.map(function(s){
+    var hit=false, tds=GAPS.map(function(g){
+      var d=mk(s[1]); d.setDate(d.getDate()+g);
+      var md=toMd(d), over=(d>mk(LAST));
+      if(!over&&md===sel) hit=true;
+      return '<td>'+(over?"—":fmt(md))+'</td>';
+    }).join("");
+    return '<tr'+(hit?' class="hit"':"")+'><td>'+s[0]+'</td><td>'+fmt(s[1])+'</td>'+tds+'</tr>';
+  }).join("");
+  byId("p-tips").innerHTML=
+  '<div class="card"><h2>单词怎么记</h2>'+
+    '<p>做完每套题，在原卷上把不认识的词画出来，旁边写上这个语境下的意思，不用另外抄。之后在第 1、3、7、14 天回看这一套画出来的词，每天 15 分钟。回看时还不认识的词打个星，没有到期套的日子就看带星的词。</p>'+
+    '<p>刚开始会觉得痛苦，这是正常的，次数多了就会越来越轻松。</p>'+
+    '<div class="duenow">'+esc(fmt(sel))+' 要回看：'+(due.length?esc(due.join("、")):"没有到期的，看带星的词就好")+'（在“今天”里切换日期，这里会跟着变）</div>'+
+    '<div class="tablewrap"><table><thead><tr><th>词表</th><th>做题日</th><th>第1次</th><th>第2次</th><th>第3次</th><th>第4次</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>'+
+  '<div class="card"><h2>六级小方法</h2><ul>'+
+    '<li>阅读：限时 40 分钟，对答案，给错题标原因（词汇、长难句、定位、选项陷阱），生词在原卷上画出来。</li>'+
+    '<li>听力：11.8 前每天精听 1 篇，之后周二、周四做整套（连做 35 分钟，订正 40 分钟），其他天复听旧篇 20 分钟。</li>'+
+    '<li>写作：每次限时 30 分钟，写完马上对照范文改写，好句型在范文上划出来，直接用进改写。</li>'+
+    '<li>翻译：每次限时 30 分钟，对照参考译文，没想到的表达在原稿上标出来，改写时用上。</li>'+
+    '<li>每次自评只看三点：句子完整、没有明显语法错、用上了学到的表达。分数以后再看。</li></ul></div>'+
+  '<div class="card"><h2>每周的复习日</h2><ul>'+
+    '<li>政府会计：周二上午 60 分钟</li><li>计量经济学：周三上午 75 分钟</li><li>成本与管理会计：周五上午 60–75 分钟</li><li>会计信息系统：周六下午 40 分钟</li></ul>'+
+    '<p>每天最多复习一科，周日不排课程复习。周二、周四的“网课”是线上家教，周六是线下家教。</p></div>'+
+  '<div class="card"><h2>12.13 到 1.11 期末总复习</h2><ul>'+
+    '<li>12.13–12.14：休整，列出四科章节清单，标出没学懂的</li>'+
+    '<li>12.15–12.29 第一轮：计量 5 天、成本 4 天、会计信息系统 3 天、政府会计 3 天，上午梳理，下午做题，晚上整理错题，计量每天加 30 分钟证明默写</li>'+
+    '<li>12.30–12.31：补没完成的项，整理错题本</li>'+
+    '<li>1.1–1.7 第二轮：做习题和往年题，背必背内容，每科隔天出现</li>'+
+    '<li>1.8–1.11 第三轮：四科都备到随时可考</li></ul>'+
+    '<p>1.12 起两周是期末周，任何一天都可能考：每天四科各轮转 30–45 分钟，考前一天只过该科错题本和速记单，考完的科目退出轮转。具体日期出来后再逐日排。</p></div>';
+}
+function renderAll(){renderChips();renderDay();renderCal();renderTips()}
+
+/* ---------- events ---------- */
+function setTab(name){
+  ["day","cal","tips"].forEach(function(n){
+    byId("p-"+n).hidden = n!==name;
+    byId("t-"+n).setAttribute("aria-selected", n===name?"true":"false");
+  });
+  try{sessionStorage.setItem("pink-tab",name)}catch(e){}
+}
+["day","cal","tips"].forEach(function(n){byId("t-"+n).addEventListener("click",function(){setTab(n); window.scrollTo(0,0);})});
+function go(md){sel=md; renderDay(); renderCal(); renderTips();}
+byId("p-day").addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.id==="prev"){ if(INDEX[sel]>0) go(D[INDEX[sel]-1][0]); }
+  else if(t.id==="next"){ if(INDEX[sel]<D.length-1) go(D[INDEX[sel]+1][0]); }
+  else if(t.id==="gotoday"){ go(todayMd); }
+  else if(t.classList.contains("check")){
+    var k=t.getAttribute("data-key");
+    if(ticks[k]) delete ticks[k]; else ticks[k]=1;
+    persist(); renderDay(); renderCal();
+    var again=byId("p-day").querySelector('[data-key="'+k+'"]'); if(again) again.focus();
+  }
+});
+byId("p-cal").addEventListener("click",function(e){
+  var t=e.target.closest("button[data-day]"); if(!t) return;
+  go(t.getAttribute("data-day")); setTab("day"); window.scrollTo(0,0);
+});
+
+renderAll();
+initDb();
+})();
+</script>
