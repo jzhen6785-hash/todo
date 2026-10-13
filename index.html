@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#FFF9FC"><title>大小姐的每日todo</title><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="每日todo"><meta name="apple-mobile-web-app-capable" content="yes">
-<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#FFF9FC"><title>大小姐的每日todo</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="每日todo"><meta name="apple-mobile-web-app-capable" content="yes"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+KuaiLe&display=swap">
@@ -74,6 +74,19 @@ button{font:inherit;color:inherit;cursor:pointer}
 .badge .ic{color:var(--pink-deep)}
 .today-btn{border:2px solid var(--pink-deep);background:transparent;color:var(--pink-deep);border-radius:999px;padding:3px 12px;font-weight:700;font-size:13px}
 .notice{background:var(--petal);border-radius:16px;padding:8px 12px;font-size:13px}
+.basket{background:var(--petal);border:2px solid var(--card-edge);border-radius:18px;padding:8px 12px;margin:10px 0;font-size:13px}
+.basket summary{cursor:pointer;font-weight:700;color:var(--pink-deep);list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+.basket summary::-webkit-details-marker{display:none}
+.basket summary small{font-weight:400;color:var(--muted);font-size:12px}
+.basket .bk-tip{margin:8px 0;color:var(--ink);line-height:1.6}
+.basket ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.basket li{background:var(--card);border:2px solid var(--card-edge);border-radius:14px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.basket .bk-day{font-size:12px;color:var(--muted)}
+.basket .bk-txt{min-width:0;overflow-wrap:anywhere}
+.basket .bk-acts{display:flex;gap:8px;flex-wrap:wrap}
+.bk-btn{border:2px solid var(--pink-deep);background:var(--pink-deep);color:#fff;border-radius:999px;padding:5px 14px;font-weight:700;font-size:13px;min-height:32px}
+.bk-btn.ghost{background:transparent;color:var(--pink-deep)}
+.basket .bk-more{margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
 .prog{display:flex;flex-direction:column;gap:6px}
 .bar{height:14px;border-radius:999px;background:var(--pink-soft);overflow:hidden;border:2px solid var(--card-edge)}
 .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pink),var(--pink-deep));transition:width .35s ease}
@@ -206,26 +219,26 @@ var D=[
 ["10-22","10:00–11:45 计量 Part5 梳理；12:00–13:00 Part5 做题",COST,"19:45–21:15 精听 L9；单词15′（顽固词表）；写译积累10′；计量补做30′"],
 ["10-23","10:00–11:10 计量 Part5 证明整理+默写①；11:15–12:00 Part3/4 证明默写②；12:15–13:00 成本周复习",AIS,"19:30–21:00 精听 L10；单词15′（顽固词表）；家教讲义30′；计量补做30′"],
 ["10-24",TUT,"14:00–14:40 会计信息系统周复习；15:00–17:30 计量：全部证明（P1–P5）默写第1轮+订正；单词：R1③",REST],
-["10-25","10:00–12:00 计量自测卷（按期中题型限时）；12:00–13:00 订正+错题归因","14:30–16:30 计量：证明默写第2轮（只写第1轮错的）+ 公式/易错点速记单","19:30–21:00 精听 L11；单词15′（R2③）；写作 W1（第一次：不计时，先写完整篇 30′）"],
-["10-26","10:00–13:00 计量：证明默写第3轮 + 过一遍自测卷错题","14:00–19:30 上课","不精听。20:00–20:40 看一遍证明清单+公式单；单词15′（R0④）；22:30 前睡"],
-["10-27","10:00–12:00 最后浏览证明清单+公式单（不做新题）","计量期中考试（按考试通知时间，通常是课表上的 14:00–16:30）；17:30–18:30 网课","考完放松；21:00–22:00 精听 L12（听不动就跳过，后面顺延）；单词15′（顽固词表）"],
-["10-28","阅读 R3"+RD+"；计量：期中卷订正+错题归因 75′（顺便预习期中后新章节）","14:00–17:00 上课","17:15–18:20 精听 L13 前半（约65′）；18:30–21:00 直播篮球比赛；21:20–21:50 精听 L13 后半+单词15′（顽固词表）；21:50–22:20 家教讲义30′"],
-["10-29","写作 W1（真题第1套作文：限时30′+改写45′）；翻译 T1（真题第1套翻译：30′+对照45′）",COST,"精听 L14；单词15′（R3①）"],
-["10-30","阅读 R4"+RD+"；成本周复习 60–75′",AIS,"精听 L15；单词15′（顽固词表）；家教讲义30′"],
+["10-25","10:00–12:00 计量自测卷 #1（按期中题型限时，现在是诊断，不是最后一次）；12:00–13:00 订正+错题归因","14:30–16:30 计量：证明默写第2轮（只写第1轮错的）+ 公式/易错点速记单","19:30–21:00 精听 L11；单词15′（R2③）；写作 W1（第一次：不计时，先写完整篇 30′）"],
+["10-26","10:00–13:00 计量：证明默写第3轮 + 过一遍自测卷 #1 错题","14:00–19:30 上课","不精听。20:00–20:40 计量：把自测卷 #1 的错题整理成一页「易错清单」；单词15′（R0④）；22:30 前睡"],
+["10-27","10:00–11:00 计量：易错清单补完（自测卷 #1 错题按知识点归类）；11:15–12:15 计量：Part1–2 补充习题限时做+订正；12:15–13:00 政府会计/成本：笔记补缺（哪科上周没跟上就补哪科）",ECON,"19:30–21:00 精听 L12；单词15′（顽固词表）；整理计量课笔记20′"],
+["10-28","阅读 R3"+RD+"；计量：证明默写第4轮（P1–P5，只写前几轮错过的）45′+易错清单过一遍 20′","14:00–17:00 上课","17:15–18:20 精听 L13 前半（约65′）；18:30–21:00 直播篮球比赛；21:20–21:50 精听 L13 后半+单词15′（顽固词表）；21:50–22:20 家教讲义30′"],
+["10-29","写作 W1（真题第1套作文：限时30′+改写45′）；翻译 T1（真题第1套翻译：30′+对照45′）","14:00–16:30 成本课；16:45–17:45 计量：Part3–4 补充习题限时做+订正；18:30–19:30 网课","精听 L14；单词15′（R3①）"],
+["10-30","阅读 R4"+RD+"；成本周复习 60–75′",AIS+"；16:45–17:45 计量：Part5 补充习题限时做+订正","精听 L15；单词15′（顽固词表）；家教讲义30′"],
 ["10-31",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W2（真题第2套作文：30′+改写）；单词：R1④、R3②、R4①",REST],
-["11-01","阅读 R5"+RD+"；"+FR,ADDBOTH,"精听 L16；单词15′（R2④）；"+NP],
+["11-01","阅读 R5"+RD+"；"+FR,"14:30–16:30 计量自测卷 #2（按期中题型限时，在家当真考）；其余休息","精听 L16；单词15′（R2④）；"+NP],
 ["11-02","阅读 R6"+RD+"；"+MN,"14:00–19:30 上课（含 14:00–15:30 政府会计，这是最后一个周一晚课）","精听 L17；单词15′（R4②、R5①）；家教讲义30′"],
-["11-03","翻译 T2（真题第2套翻译：限时30′+对照改写45′）；政府会计周复习 60′",ECON,"精听 L18；单词15′（R6①）；整理计量课笔记20′"],
-["11-04","阅读 R7"+RD+"；计量周复习 75′（新课+习题，旧证明循环默写 P2）","14:00–17:00 上课","精听 L19；单词15′（R3③、R5②）；家教讲义30′"],
-["11-05","写作 W3（真题第3套作文：限时30′+改写45′）；翻译 T3（真题第3套翻译：30′+对照45′）",COST,"精听 L20；单词15′（R6②、R7①）"],
-["11-06","阅读 R8"+RD+"；成本周复习 60–75′",AIS,"精听 L21；单词15′（R4③）；家教讲义30′"],
+["11-03","翻译 T2（真题第2套翻译：限时30′+对照改写45′）；政府会计周复习 60′","14:00–16:30 计量课；16:40–17:25 计量：自测卷 #2 订正+错题归因 45′；17:30–18:30 网课","精听 L18；单词15′（R6①）；整理计量课笔记20′"],
+["11-04","阅读 R7"+RD+"；计量周复习 75′（新课+习题，旧证明循环默写 P2）","14:00–17:00 上课；17:15–18:15 计量：证明默写第5轮（P1–P5 全部，只写骨架+关键一步）","精听 L19；单词15′（R3③、R5②）；家教讲义30′"],
+["11-05","写作 W3（真题第3套作文：限时30′+改写45′）；翻译 T3（真题第3套翻译：30′+对照45′）","14:00–16:30 成本课；16:45–17:45 计量：公式/易错点速记单默写+易错清单第2遍；18:30–19:30 网课","精听 L20；单词15′（R6②、R7①）"],
+["11-06","阅读 R8"+RD+"；成本周复习 60–75′",AIS+"；16:45–17:45 计量：自测卷 #1、#2 的错题全部重做一遍","精听 L21；单词15′（R4③）；家教讲义30′"],
 ["11-07",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W4（真题第4套作文：30′+改写）；单词：R7②、R8①",REST],
-["11-08","阅读 R9"+RD+"；"+FR,ADDBOTH,"精听 L22（精听收官）；单词15′（R5③）；"+NP],
-["11-09","阅读 R10"+RD+"；"+MN,CL,BK+"；单词15′（R6③、R8②、R9①）；家教讲义30′；"+ADD],
-["11-10","翻译 T4（真题第4套翻译：限时30′+对照改写45′）；政府会计周复习 60′",ECON,"整套听力 #1"+L35+"；单词15′（R10①）；整理计量课笔记20′"],
-["11-11","阅读 R11"+RD+"；计量周复习 75′（新课+习题，旧证明循环默写 P3）","14:00–17:00 上课（最后一次）",BK+"；单词15′（R3④、R7③、R9②）；家教讲义30′"],
-["11-12","写作 W5（真题第5套作文：限时30′+改写45′）；翻译 T5（真题第5套翻译：30′+对照45′）",COST,"整套听力 #2"+L35+"；单词15′（R10②、R11①）"],
-["11-13","阅读 M1"+RD+"；成本周复习 60–75′",AIS,BK+"；单词15′（R4④、R8③）；家教讲义30′"],
+["11-08","阅读 R9"+RD+"；"+FR,"14:30–16:30 写作加练、翻译加练各一篇（各限时30′+对照改写30′）；16:45–17:45 计量：证明默写最后一轮（P1–P5 全部）","精听 L22（精听收官）；单词15′（R5③）；"+NP],
+["11-09","阅读 R10"+RD+"；"+MN,CL+"；17:45–18:45 计量：公式速记单+易错清单最后过一遍（不做新题）",BK+"；单词15′（R6③、R8②、R9①）；家教讲义30′；早睡"],
+["11-10","10:00–11:00 计量：只翻公式速记单+易错清单（不做新题）；11:15–12:15 政府会计周复习 60′","计量期中考试（按考试通知时间，通常是课表上的 14:00–16:30）；17:30–18:30 网课","考完放松；整套听力 #1"+L35+"（太累就跳过，后面顺延）；单词15′（R10①）"],
+["11-11","阅读 R11"+RD+"；翻译 T4（真题第4套翻译：限时30′+对照改写45′）；计量：期中考试回忆+错题归因 20′","14:00–17:00 上课（最后一次）",BK+"；单词15′（R3④、R7③、R9②）；家教讲义30′；"+ADD],
+["11-12","写作 W5（真题第5套作文：限时30′+改写45′）；翻译 T5（真题第5套翻译：30′+对照45′）","14:00–16:30 成本课；16:45–17:45 翻译加练"+WX+"；18:30–19:30 网课","整套听力 #2"+L35+"；单词15′（R10②、R11①）"],
+["11-13","阅读 M1"+RD+"；成本周复习 60–75′",AIS+"；16:45–17:45 写作加练"+WX,BK+"；单词15′（R4④、R8③）；家教讲义30′"],
 ["11-14",TUT,"14:00–15:00 会计信息系统周复习；15:15–16:15 写作 W6（真题第6套作文：30′+改写）；单词：R11②、M1①",REST],
 ["11-15","全套模拟 F1"+FM+"；"+FR,"休息",BK+"；单词15′（R5④、R9③）；"+NP],
 ["11-16","阅读 M2"+RD+"；"+MN,CL,BK+"；单词15′（R6④、R10③、M1②、F1①）；家教讲义30′；"+ADD],
@@ -256,7 +269,7 @@ var D=[
 ["12-11","放松为主：只看一页“考场提醒”和作文开头结尾句型 30′；顽固词表 15′",AIS,"早吃早睡，22:30 前睡；不再看新材料"],
 ["12-12","六级考试日：上午家教 9:30–11:00（如不调课）；回家吃饭午休，翻一页“考场提醒”20′","按准考证时间提前 1 小时到考场；考完彻底休息","休息；不安排学习"]
 ];
-var BADGES={"10-27":["计量期中","star"],"12-12":["六级考试","crown"],"11-15":["全套模拟 F1","spark"],"11-22":["全套模拟 F2","spark"],"11-29":["全套模拟 F3","spark"],"12-06":["全套模拟 F4","spark"]};
+var BADGES={"11-10":["计量期中","star"],"12-12":["六级考试","crown"],"11-15":["全套模拟 F1","spark"],"11-22":["全套模拟 F2","spark"],"11-29":["全套模拟 F3","spark"],"12-06":["全套模拟 F4","spark"]};
 var SETS=[["R0","10-12"],["R1","10-17"],["R2","10-18"],["R3","10-28"],["R4","10-30"],["R5","11-01"],["R6","11-02"],["R7","11-04"],["R8","11-06"],["R9","11-08"],["R10","11-09"],["R11","11-11"],["M1","11-13"],["F1","11-15"],["M2","11-16"],["M3","11-18"],["M4","11-20"],["F2","11-22"],["M5","11-23"],["M6","11-25"],["M7","11-27"],["F3","11-29"],["M8","11-30"],["M9","12-02"],["M10","12-04"],["F4","12-06"]];
 var ROUND=["①","②","③","④"], GAPS=[1,3,7,14];
 
@@ -332,7 +345,7 @@ function initDb(){
 
 /* ---------- views ---------- */
 function renderChips(){
-  var items=[["计量期中",daysTo(new Date(Y,9,27)),"10.27"],["六级考试",daysTo(new Date(Y,11,12)),"12.12"],["期末周开始",daysTo(new Date(Y+1,0,12)),"1.12"]];
+  var items=[["计量期中",daysTo(new Date(Y,10,10)),"11.10"],["六级考试",daysTo(new Date(Y,11,12)),"12.12"],["期末周开始",daysTo(new Date(Y+1,0,12)),"1.12"]];
   byId("chips").innerHTML=items.map(function(x){
     var n=x[1];
     var big = n>0 ? n : (n===0 ? "今天" : "已过");
@@ -341,7 +354,7 @@ function renderChips(){
   }).join("");
 }
 function phaseOf(md){
-  if(md<="10-27") return "阶段一 · 计量期中冲刺";
+  if(md<="11-10") return "阶段一 · 计量期中冲刺";
   if(md<="11-30") return "阶段二 · 六级主战场";
   return "阶段三 · 六级冲刺";
 }
@@ -353,6 +366,31 @@ function msg(c){
   if(p<.5) return "已经出发啦，继续继续";
   if(p<1) return "过半啦，快到终点了";
   return "今天全部完成，抱抱你";
+}
+var basketOpen=false, BK_MAX=8;
+function leftovers(){
+  var out=[];
+  for(var i=D.length-1;i>=0;i--){
+    var md=D[i][0]; if(md>=todayMd) continue;
+    slots(md).forEach(function(list,si){list.forEach(function(it,ix){
+      var key=md+":"+si+":"+ix;
+      if(it.k==="task"&&!ticks[key]&&!ticks["s:"+key]) out.push({key:key,md:md,t:it.t,si:si,ix:ix});
+    })});
+  }
+  out.sort(function(a,b){return a.md<b.md?1:a.md>b.md?-1:(a.si-b.si)||(a.ix-b.ix)});
+  return out;
+}
+function basketHtml(){
+  var L=leftovers(); if(!L.length) return "";
+  var h='<details class="basket"'+(basketOpen?" open":"")+'><summary>补课篮子：之前有 '+L.length+' 项没做完<small>点开看看，不用全补</small></summary>'+
+    '<p class="bk-tip">没做完很正常，这里就是给它们留的地方。每周日“周复盘”时来处理一次就够：重要的补上，补不了的直接放掉。先补的顺序：计量和课程复习，然后是阅读、写作、翻译套题，然后是精听，最后才是其他。</p><ul>';
+  L.slice(0,BK_MAX).forEach(function(x){
+    h+='<li><span class="bk-day">'+esc(fmt(x.md))+' 周'+WD[mk(x.md).getDay()]+'</span><span class="bk-txt">'+decorate(x.t)+'</span>'+
+      '<span class="bk-acts"><button class="bk-btn" data-act="makeup" data-key="'+x.key+'">补上了</button><button class="bk-btn ghost" data-act="skip" data-key="'+x.key+'">放掉</button></span></li>';
+  });
+  h+='</ul>';
+  if(L.length>BK_MAX) h+='<div class="bk-more"><span>还有 '+(L.length-BK_MAX)+' 项更早的没显示</span><button class="bk-btn ghost" data-act="skipold">更早的都放掉</button></div>';
+  return h+'</details>';
 }
 function renderDay(){
   var md=sel, i=INDEX[md], r=D[i], d=mk(md), c=counts(md);
@@ -371,6 +409,7 @@ function renderDay(){
   html+=notice;
   html+='<div class="prog"><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+c.tot+'" aria-valuenow="'+c.done+'"><i style="width:'+(c.tot?Math.round(c.done/c.tot*100):0)+'%"></i></div>'+
     '<div class="progtxt"><span>'+esc(msg(c))+'</span><span><b>'+c.done+'</b> / '+c.tot+' 完成</span></div></div>';
+  if(md===todayMd) html+=basketHtml();
   slots(md).forEach(function(list,si){
     html+='<div class="slot s'+si+'"><h3>'+ic(SLOT[si][0])+SLOT[si][1]+' <small>'+SLOT[si][2]+'</small></h3><ul>';
     if(!list.length) html+='<li class="empty">这一段没有安排</li>';
@@ -430,6 +469,11 @@ function renderTips(){
     return '<tr'+(hit?' class="hit"':"")+'><td>'+s[0]+'</td><td>'+fmt(s[1])+'</td>'+tds+'</tr>';
   }).join("");
   byId("p-tips").innerHTML=
+  '<div class="card"><h2>没做完怎么办</h2><ul>'+
+    '<li>没勾的任务会自动进“今天”页面顶部的“补课篮子”，不会消失，也不会扣分。</li>'+
+    '<li>每周日“周复盘”时处理一次：做完的点“补上了”，决定不补的点“放掉”。</li>'+
+    '<li>一天里时间不够，就按这个顺序保：计量和课程复习，阅读/写作/翻译套题，精听，其他。精听落下的，用复听旧篇补。</li>'+
+    '<li>落下一两天不用重排。如果一周以上都没跟上，告诉我，我帮你重排后面的日期。</li></ul></div>'+
   '<div class="card"><h2>单词怎么记</h2>'+
     '<p>做完每套题，在原卷上把不认识的词画出来，旁边写上这个语境下的意思，不用另外抄。之后在第 1、3、7、14 天回看这一套画出来的词，每天 15 分钟。回看时还不认识的词打个星，没有到期套的日子就看带星的词。</p>'+
     '<p>刚开始会觉得痛苦，这是正常的，次数多了就会越来越轻松。</p>'+
@@ -464,8 +508,17 @@ function setTab(name){
 }
 ["day","cal","tips"].forEach(function(n){byId("t-"+n).addEventListener("click",function(){setTab(n); window.scrollTo(0,0);})});
 function go(md){sel=md; renderDay(); renderCal(); renderTips();}
+byId("p-day").addEventListener("toggle",function(e){ if(e.target.classList&&e.target.classList.contains("basket")) basketOpen=e.target.open; },true);
 byId("p-day").addEventListener("click",function(e){
   var t=e.target.closest("button"); if(!t) return;
+  var act=t.getAttribute("data-act");
+  if(act){
+    var kk=t.getAttribute("data-key");
+    if(act==="makeup"&&kk) ticks[kk]=1;
+    else if(act==="skip"&&kk) ticks["s:"+kk]=1;
+    else if(act==="skipold"){ leftovers().slice(BK_MAX).forEach(function(x){ticks["s:"+x.key]=1}); }
+    persist(); renderDay(); renderCal(); return;
+  }
   if(t.id==="prev"){ if(INDEX[sel]>0) go(D[INDEX[sel]-1][0]); }
   else if(t.id==="next"){ if(INDEX[sel]<D.length-1) go(D[INDEX[sel]+1][0]); }
   else if(t.id==="gotoday"){ go(todayMd); }
